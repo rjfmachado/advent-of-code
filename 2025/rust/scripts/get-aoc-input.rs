@@ -1,12 +1,11 @@
-#!/usr/bin/env cargo +nightly -Zscript
----cargo
-[package]
-edition = "2024"
-[dependencies]
-clap = { version = "4.5", features = ["derive"] }
-nom = "8"
-reqwest = { version = "0.12", features=["blocking"] }
----
+//!```cargo
+//![package]
+//!edition = "2024"
+//![dependencies]
+//!clap = { version = "4.5", features = ["derive"] }
+//!nom = "8"
+//!reqwest = { version = "0.12", features=["blocking"] }
+//!```
 
 use clap::{error::ErrorKind, CommandFactory, Parser};
 use nom::{
