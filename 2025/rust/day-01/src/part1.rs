@@ -1,13 +1,13 @@
 #[tracing::instrument]
 pub fn process(input: &str) -> miette::Result<String> {
-    // Track how many times we land exactly on position 0 while walking the ring.
+    // Number of times we land on position 0 after applying each instruction.
     let mut count: u16 = 0;
-    // Positions live on a 0–99 ring; start in the middle at 50.
+    // Walk a 0–99 ring, starting in the middle at position 50.
     let mut position: i32 = 50;
     let _orders: Vec<_> = input
         .lines()
         .map(|line| {
-            // Parse the line into a direction (L/R) and a signed step amount.
+            // Split "L10" / "R3" into a direction and signed step count.
             let mut line = line.chars();
             if let Some(direction_char) = line.next() {
                 let value: i32 =
@@ -20,7 +20,7 @@ pub fn process(input: &str) -> miette::Result<String> {
                         _ => panic!("Bad input"),
                     };
 
-                // Move around the ring, wrapping via modulo arithmetic.
+                // Apply the move and wrap via modulo so we stay on the ring.
                 match command {
                     Direction::Left(i) => {
                         position =
@@ -33,7 +33,7 @@ pub fn process(input: &str) -> miette::Result<String> {
                 };
             }
 
-            // Count each visit to position 0 after applying the move.
+            // Record any landing on position 0 after this instruction.
             if position == 0 {
                 count += 1
             }
