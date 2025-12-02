@@ -8,25 +8,31 @@ pub fn process(input: &str) -> miette::Result<String> {
         .lines()
         .map(|line| {
             // Parse the line into a direction (L/R) and a signed step amount.
-            let direction: &str = &line[0..1];
-            let value: i32 = line[1..].parse().unwrap();
-            let command: Direction = if direction == "L" {
-                Direction::Left(value)
-            } else {
-                Direction::Right(value)
-            };
+            let mut line = line.chars();
+            if let Some(direction_char) = line.next() {
+                let value: i32 =
+                    line.as_str().parse().unwrap();
 
-            // Move around the ring, wrapping via modulo arithmetic.
-            match command {
-                Direction::Left(i) => {
-                    position =
-                        (position - i).rem_euclid(100)
-                }
-                Direction::Right(i) => {
-                    position =
-                        (position + i).rem_euclid(100)
-                }
-            };
+                let command: Direction =
+                    match direction_char {
+                        'L' => Direction::Left(value),
+                        'R' => Direction::Right(value),
+                        _ => panic!("Bad input"),
+                    };
+
+                // Move around the ring, wrapping via modulo arithmetic.
+                match command {
+                    Direction::Left(i) => {
+                        position =
+                            (position - i).rem_euclid(100)
+                    }
+                    Direction::Right(i) => {
+                        position =
+                            (position + i).rem_euclid(100)
+                    }
+                };
+            }
+
             // Count each visit to position 0 after applying the move.
             if position == 0 {
                 count += 1
