@@ -1,3 +1,5 @@
+const DIAL_SIZE: i32 = 100;
+
 #[tracing::instrument]
 pub fn process(input: &str) -> miette::Result<String> {
     // Number of times we land on position 0 after applying each instruction.

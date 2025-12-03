@@ -1,5 +1,6 @@
 const DIAL_SIZE: i32 = 100;
 const START_DIAL_POSITION: i32 = 50;
+
 #[tracing::instrument]
 pub fn process(input: &str) -> miette::Result<String> {
     // Track how many times we land on position 0 while walking the ring,
