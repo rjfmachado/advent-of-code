@@ -1,13 +1,10 @@
-const DIAL_SIZE: i32 = 100;
-const START_DIAL_POSITION: i32 = 50;
-
 #[tracing::instrument]
 pub fn process(input: &str) -> miette::Result<String> {
     // Number of times we land on position 0 after applying each instruction.
     let mut count: u16 = 0;
     // Walk a 0–99 ring, starting in the middle at position 50.
-    let mut position: i32 = START_DIAL_POSITION;
-    let _dial_commands: Vec<_> = input
+    let mut position: i32 = 50;
+    let _orders: Vec<_> = input
         .lines()
         .map(|line| {
             // Split "L10" / "R3" into a direction and signed step count.
