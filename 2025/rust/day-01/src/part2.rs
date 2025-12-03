@@ -1,10 +1,12 @@
+const DIAL_SIZE: i32 = 100;
+const START_DIAL_POSITION: i32 = 50;
 #[tracing::instrument]
 pub fn process(input: &str) -> miette::Result<String> {
     // Track how many times we land on position 0 while walking the ring,
     // including crossings caused by oversized step counts.
     let mut count: i32 = 0;
     // Positions live on a 0-99 ring; start in the middle at 50.
-    let mut position: i32 = 50;
+    let mut position: i32 = START_DIAL_POSITION;
     let _orders: Vec<_> = input
         .lines()
         .map(|line| {
@@ -16,10 +18,11 @@ pub fn process(input: &str) -> miette::Result<String> {
 
                 // If the step count spans multiple full laps,
                 // pre-count the zero crossings those laps guarantee.
-                if value > 100 {
-                    let multiple = (value / 100).abs();
+                if value > DIAL_SIZE {
+                    let multiple =
+                        (value / DIAL_SIZE).abs();
                     count = count + multiple;
-                    value = value % 100;
+                    value = value % DIAL_SIZE;
                 }
 
                 let command: Direction =
@@ -37,16 +40,16 @@ pub fn process(input: &str) -> miette::Result<String> {
                         {
                             count += 1
                         }
-                        position =
-                            (position - i).rem_euclid(100)
+                        position = (position - i)
+                            .rem_euclid(DIAL_SIZE)
                     }
                     Direction::Right(i) => {
                         // Crosses zero when stepping right beyond the upper bound.
-                        if position + i > 100 {
+                        if position + i > DIAL_SIZE {
                             count += 1
                         }
-                        position =
-                            (position + i).rem_euclid(100)
+                        position = (position + i)
+                            .rem_euclid(DIAL_SIZE)
                     }
                 };
             }

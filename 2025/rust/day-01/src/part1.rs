@@ -1,9 +1,12 @@
+const DIAL_SIZE: i32 = 100;
+const START_DIAL_POSITION: i32 = 50;
+
 #[tracing::instrument]
 pub fn process(input: &str) -> miette::Result<String> {
     // Number of times we land on position 0 after applying each instruction.
     let mut count: u16 = 0;
     // Walk a 0–99 ring, starting in the middle at position 50.
-    let mut position: i32 = 50;
+    let mut position: i32 = START_DIAL_POSITION;
     let _orders: Vec<_> = input
         .lines()
         .map(|line| {
@@ -23,12 +26,12 @@ pub fn process(input: &str) -> miette::Result<String> {
                 // Apply the move and wrap via modulo so we stay on the ring.
                 match command {
                     Direction::Left(i) => {
-                        position =
-                            (position - i).rem_euclid(100)
+                        position = (position - i)
+                            .rem_euclid(DIAL_SIZE)
                     }
                     Direction::Right(i) => {
-                        position =
-                            (position + i).rem_euclid(100)
+                        position = (position + i)
+                            .rem_euclid(DIAL_SIZE)
                     }
                 };
             }
