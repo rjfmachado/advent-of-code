@@ -6,15 +6,14 @@ pub fn process(input: &str) -> miette::Result<String> {
         .map(|range| {
             dbg!(&range);
             let _id_pair: Vec<_> = range
-                .split("-")
-                .map(|id| dbg!(id))
+                .split("-") // TODO: use split_once
+                .map(|id| {
+                    dbg!(id);
+                    // let mut invalid = false;
+                    // if &id[0..1] == "0" {
+                    //     invalid = true;
+                })
                 .collect();
-
-            // let mut invalid = false;
-
-            // if &id[0..1] == "0" {
-            //     invalid = true;
-            // }
         })
         .collect();
 
