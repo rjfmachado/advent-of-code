@@ -11,10 +11,17 @@ pub fn process(input: &str) -> miette::Result<String> {
             {
                 let s = i.to_string();
                 let half = s.len() / 2;
-                if &s[..half] == &s[half..] {
-                    sum += s.parse::<u64>().unwrap();
-                    dbg!(s, sum);
+
+                for j in 0..half {
+                    if &s[half..].contains(&s[..j]) {
+                        sum += s.parse::<u64>().unwrap();
+                        dbg!(s, sum);
+                    }
                 }
+                // if &s[..half] == &s[half..] {
+                //     sum += s.parse::<u64>().unwrap();
+                //     dbg!(s, sum);
+                // }
             }
         })
         .collect();
