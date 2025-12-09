@@ -12,7 +12,7 @@ pub fn process(input: &str) -> miette::Result<String> {
                 let s = i.to_string();
                 let half = s.len() / 2;
                 if &s[..half] == &s[half..] {
-                    sum += s.parse::<u64>().unwrap();
+                    sum += i;
                     dbg!(s, sum);
                 }
             }
