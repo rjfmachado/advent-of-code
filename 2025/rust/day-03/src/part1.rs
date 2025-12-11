@@ -1,19 +1,22 @@
+use itertools::Itertools;
+
 #[tracing::instrument]
 pub fn process(input: &str) -> miette::Result<String> {
     let output_joltage: u64 = 0;
-    let _battery_banks: Vec<_> = input
-        .lines()
+    let battery_banks: Vec<&str> = input.lines().collect();
+    dbg!(&battery_banks);
+
+    let max_joltage_per_bank: Vec<_> = battery_banks
+        .into_iter()
         .map(|bank| {
-            dbg!(&bank);
-            let _pair: Vec<_> = bank
-                .chars()
-                .enumerate()
-                .map(|t| {
-                    dbg!(t);
-                })
-                .collect();
+            let trim_bank = &bank[0..bank.len() - 1]; //remove last as it wont ever be used as the major pair
+            trim_bank.chars().enumerate().max_set_by_key(
+                |&(_index, joltage)| joltage,
+            );
+            dbg!(&trim_bank);
         })
         .collect();
+    dbg!(&max_joltage_per_bank);
     Ok(output_joltage.to_string())
 }
 
