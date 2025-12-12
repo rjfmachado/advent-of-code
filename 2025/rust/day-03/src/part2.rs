@@ -10,9 +10,9 @@ pub fn process(input: &str) -> miette::Result<String> {
     for mut bank in battery_banks {
         //dbg!(&bank);
         let mut working_battery_bank = String::new();
-        for battery in (0..WORKING_BATTERY_SIZE).rev() {
+        for i in (0..WORKING_BATTERY_SIZE).rev() {
             //dbg!(&battery);
-            let max = &bank[0..&bank.len() - battery]
+            let max = &bank[0..&bank.len() - i]
                 .chars()
                 .enumerate()
                 .max_set_by_key(|&(_index, joltage)| {
