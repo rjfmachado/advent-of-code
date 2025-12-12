@@ -4,13 +4,14 @@ use itertools::Itertools;
 pub fn process(input: &str) -> miette::Result<String> {
     const WORKING_BATTERY_SIZE: usize = 12;
     let mut output_joltage: u64 = 0;
-    let mut working_battery_banks: Vec<String> = Vec::new();
+    //let mut working_battery_banks: Vec<String> = Vec::new();
     let battery_banks: Vec<&str> = input.lines().collect();
 
     for mut bank in battery_banks {
         //dbg!(&bank);
         let mut working_battery_bank = String::new();
         for i in (0..WORKING_BATTERY_SIZE).rev() {
+            //reversed, so we count down the right side trim required
             //dbg!(&battery);
             let max = &bank[0..&bank.len() - i]
                 .chars()
@@ -24,7 +25,7 @@ pub fn process(input: &str) -> miette::Result<String> {
         }
         output_joltage +=
             &working_battery_bank.parse::<u64>().unwrap();
-        working_battery_banks.push(working_battery_bank);
+        //working_battery_banks.push(working_battery_bank);
     }
     //dbg!(&working_battery_banks);
 
