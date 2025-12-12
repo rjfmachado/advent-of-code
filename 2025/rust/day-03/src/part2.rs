@@ -13,12 +13,15 @@ pub fn process(input: &str) -> miette::Result<String> {
         for i in (0..WORKING_BATTERY_SIZE).rev() {
             //reversed, so we count down the right side trim required
             //dbg!(&battery);
-            let max = &bank[0..&bank.len() - i]
+            let max = bank[0..bank.len() - i]
                 .chars()
                 .enumerate()
-                .max_set_by_key(|&(_index, joltage)| {
-                    joltage
-                })[0];
+                .max_set_by_key(|(_index, joltage)| {
+                    *joltage
+                })
+                .first() //we care only about the 1st one
+                .cloned()
+                .unwrap();
             //dbg!(&max);
             working_battery_bank.push(max.1);
             bank = &bank[max.0 + 1..];
