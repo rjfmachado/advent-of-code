@@ -1,6 +1,53 @@
+use std::ops::{Range, RangeInclusive};
+
 #[tracing::instrument]
-pub fn process(_input: &str) -> miette::Result<String> {
+pub fn process(input: &str) -> miette::Result<String> {
     let mut count: usize = 0;
+    let mut ingredient_ids: Vec<usize> = Vec::new();
+    let mut fresh_ingredient_ranges: Vec<
+        RangeInclusive<usize>,
+    > = Vec::new();
+
+    let x: Vec<_> = input
+        .lines()
+        .map(|line| {
+            if !line.is_empty() {
+                if line.contains('-') {
+                    let start: usize = line
+                        .split_once('-')
+                        .unwrap()
+                        .0
+                        .to_owned()
+                        .parse()
+                        .unwrap();
+                    let end: usize = line
+                        .split_once('-')
+                        .unwrap()
+                        .1
+                        .to_owned()
+                        .parse()
+                        .unwrap();
+                    fresh_ingredient_ranges
+                        .push(start..=end);
+                } else {
+                    ingredient_ids
+                        .push(line.parse().unwrap())
+                }
+            } else {
+            }
+        })
+        .collect();
+    for ingredient in ingredient_ids {
+        let mut fresh = false;
+        for range in &fresh_ingredient_ranges {
+            if range.contains(&ingredient) {
+                if fresh == false {
+                    count += 1;
+                    fresh = true;
+                }
+            }
+        }
+    }
     Ok(count.to_string())
 }
 
