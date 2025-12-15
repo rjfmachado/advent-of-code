@@ -45,7 +45,7 @@ pub fn process(input: &str) -> miette::Result<String> {
 mod tests {
     use super::*;
 
-    #[test]
+    #[test_log::test]
     fn test_process() -> miette::Result<()> {
         let input = "987654321111111
 811111111111119

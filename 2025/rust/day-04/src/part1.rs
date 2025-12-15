@@ -1,3 +1,5 @@
+use tracing::info;
+
 const ADJACENT: usize = 1;
 
 #[tracing::instrument]
@@ -71,7 +73,7 @@ fn get_surrounding(
 mod tests {
     use super::*;
 
-    #[test]
+    #[test_log::test]
     fn test_process() -> miette::Result<()> {
         let input = "..@@.@@@@.
 @@@.@.@.@@

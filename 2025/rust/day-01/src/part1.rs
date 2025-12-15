@@ -54,7 +54,7 @@ enum Direction {
 mod tests {
     use super::*;
 
-    #[test]
+    #[test_log::test]
     fn test_process() -> miette::Result<()> {
         let input = "L68
 L30
