@@ -1,6 +1,7 @@
 #[tracing::instrument]
 pub fn process(_input: &str) -> miette::Result<String> {
-    todo!("day 01 - part 1");
+    let mut count: usize = 0;
+    Ok(count.to_string())
 }
 
 #[cfg(test)]
@@ -9,9 +10,18 @@ mod tests {
 
     #[test_log::test]
     fn test_process() -> miette::Result<()> {
-        todo!("haven't built test yet");
-        let input = "";
-        assert_eq!("", process(input)?);
+        let input = "3-5
+10-14
+16-20
+12-18
+
+1
+5
+8
+11
+17
+32";
+        assert_eq!("3", process(input)?);
         Ok(())
     }
 }
