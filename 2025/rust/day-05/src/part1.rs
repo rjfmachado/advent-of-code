@@ -1,4 +1,4 @@
-use std::ops::{Range, RangeInclusive};
+use std::ops::RangeInclusive;
 
 #[tracing::instrument]
 pub fn process(input: &str) -> miette::Result<String> {
