@@ -1,16 +1,11 @@
-use std::ops::{Range, RangeInclusive};
+use std::cmp;
+use std::ops::Range;
 
 use itertools::Itertools;
 
 #[tracing::instrument]
 pub fn process(input: &str) -> miette::Result<String> {
-    let mut count: usize = 0;
-    let mut ingredient_ids: Vec<usize> = Vec::new();
-    let mut fresh_ingredient_ranges: Vec<
-        RangeInclusive<usize>,
-    > = Vec::new();
-
-    let x: Vec<_> = input
+    let fresh_ingredient_ranges: Vec<Range<usize>> = input
         .lines()
         .map(|line| {
             if !line.is_empty() {
@@ -29,21 +24,36 @@ pub fn process(input: &str) -> miette::Result<String> {
                         .to_owned()
                         .parse()
                         .unwrap();
-                    fresh_ingredient_ranges
-                        .push(start..=end);
+                    Some(Range { start, end })
                 } else {
+                    None
                 }
             } else {
+                None
             }
         })
-        .collect();
-    let t: Vec<_> = fresh_ingredient_ranges
-        .into_iter()
         .flatten()
-        .unique()
         .collect();
 
-    count = t.len();
+    let count: usize = fresh_ingredient_ranges
+        .into_iter()
+        .sorted_by(|a, b| a.start.cmp(&b.start)) //coalesce expects starting values in order
+        .coalesce(|current, next| {
+            //merges the ranges
+            if next.start <= current.end {
+                // Overlap found: Merge them
+                // Return Ok(merged_item) to replace the pair with a single item
+                Ok(current.start
+                    ..cmp::max(current.end, next.end))
+            } else {
+                // No overlap: Keep them separate
+                // Return Err((x, y)) to indicate the split point
+                Err((current, next))
+            }
+        })
+        .map(|range| range.end + 1 - range.start)
+        .sum::<usize>();
+
     Ok(count.to_string())
 }
 

@@ -8,7 +8,7 @@ pub fn process(input: &str) -> miette::Result<String> {
         RangeInclusive<usize>,
     > = Vec::new();
 
-    let x: Vec<_> = input
+    let _x: Vec<_> = input
         .lines()
         .map(|line| {
             if !line.is_empty() {
