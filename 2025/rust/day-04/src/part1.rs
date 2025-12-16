@@ -1,5 +1,3 @@
-use tracing::info;
-
 const ADJACENT: usize = 1;
 
 #[tracing::instrument]
