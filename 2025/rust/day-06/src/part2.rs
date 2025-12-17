@@ -1,3 +1,6 @@
+use itertools::Itertools;
+use nom::Input;
+
 #[derive(Debug, Clone)]
 enum Operation {
     Add,
@@ -22,19 +25,59 @@ pub fn process(input: &str) -> miette::Result<String> {
         .collect();
 
     data.truncate(&data.len() - 1);
+    //dbg!(&data);
 
-    let numbers: Vec<Vec<_>> = data
-        .into_iter()
-        .map(|number| number.chars().rev().collect())
+    let x: Vec<Vec<_>> = data
+        .iter()
+        .map(|lines| {
+            lines
+                .chars()
+                .enumerate()
+                .filter(|x| x.0 + 1 % 4 != 0)
+                .map(|x| x.1)
+                .collect()
+        })
         .collect();
 
+    dbg!(&x);
+
+    // let numbers: Vec<Vec<u64>> = x
+    //     .into_iter()
+    //     .map(|numbers| {
+    //         numbers
+    //             .split(" ")
+    //             //.filter(|number| !number.is_empty())
+    //             .map(|n| {
+    //                 n.parse::<u64>().unwrap_or_default()
+    //             })
+    //             .collect()
+    //     })
+    //     .collect();
+
     //dbg!(&operations);
-    dbg!(&numbers);
+    // dbg!(&numbers);
 
-    //let row_size: u64 = numbers[0].len() as u64;
-    //let col_size = numbers.len() as u64;
+    // let row_size: usize = numbers[0].len();
+    // let col_size: usize = numbers.len();
 
-    let mut result: u64 = 0;
+    let mut result: usize = 0;
+    // for x in (0..row_size).rev() {
+    //     let mut column: usize = 0;
+    //     for y in (0..col_size).rev() {
+    //         match &operations[x] {
+    //             Operation::Add => column += &numbers[y][x],
+    //             Operation::Multiply => {
+    //                 if column == 0 {
+    //                     column += &numbers[y][x]
+    //                 } else {
+    //                     column *= &numbers[y][x]
+    //                 }
+    //             }
+    //             Operation::None => {}
+    //         }
+    //     }
+    //     result += column;
+    // }
     // for x in 0..row_size as usize {
     //     let mut column: u64 = 0;
     //     for y in 0..(col_size) as usize {
