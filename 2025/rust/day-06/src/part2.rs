@@ -27,35 +27,23 @@ pub fn process(input: &str) -> miette::Result<String> {
     data.truncate(&data.len() - 1);
     //dbg!(&data);
 
-    let x: Vec<Vec<_>> = data
+    let numbers: Vec<Vec<u64>> = data
         .iter()
         .map(|lines| {
             lines
                 .chars()
-                .enumerate()
-                .filter(|x| x.0 + 1 % 4 != 0)
-                .map(|x| x.1)
-                .collect()
+                //.enumerate()
+                //.filter(|x| x.0 + 1 % 4 != 0)
+                .map(|x| {
+                    x.to_digit(10).unwrap_or_default()
+                        as u64
+                })
+                .collect() // need to handle missing space from input table at the end of line
         })
         .collect();
 
-    dbg!(&x);
-
-    // let numbers: Vec<Vec<u64>> = x
-    //     .into_iter()
-    //     .map(|numbers| {
-    //         numbers
-    //             .split(" ")
-    //             //.filter(|number| !number.is_empty())
-    //             .map(|n| {
-    //                 n.parse::<u64>().unwrap_or_default()
-    //             })
-    //             .collect()
-    //     })
-    //     .collect();
-
     //dbg!(&operations);
-    // dbg!(&numbers);
+    dbg!(&numbers);
 
     // let row_size: usize = numbers[0].len();
     // let col_size: usize = numbers.len();
