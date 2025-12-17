@@ -4,7 +4,7 @@ pub fn process(input: &str) -> miette::Result<String> {
     let _range_list: Vec<_> = input
         .split(",")
         .map(|range| {
-            dbg!(&range);
+            //dbg!(&range);
             let id_pair = range.split_once("-").unwrap();
             for i in id_pair.0.parse::<u64>().unwrap()
                 ..=id_pair.1.parse::<u64>().unwrap()
@@ -13,12 +13,12 @@ pub fn process(input: &str) -> miette::Result<String> {
                 let half = s.len() / 2;
                 if &s[..half] == &s[half..] {
                     sum += i;
-                    dbg!(s, sum);
+                    //dbg!(s, sum);
                 }
             }
         })
         .collect();
-    dbg!(&sum);
+    //dbg!(&sum);
     Ok(sum.to_string())
 }
 

@@ -1,5 +1,4 @@
 use itertools::Itertools;
-use nom::Input;
 
 #[derive(Debug, Clone)]
 enum Operation {
